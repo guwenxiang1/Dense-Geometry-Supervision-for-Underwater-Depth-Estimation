@@ -6,3 +6,4 @@ The runtime environment can refer to the environment of [Adabins](https://github
 
 ## Rendered Datasets and Pretrained Models
 The [datasets rendered in the paper and the pre-trained weights for the Adabins examples](https://pan.quark.cn/s/05b939219de3).
+The training and testing processes can directly refer to the relevant processes of Adabins.
