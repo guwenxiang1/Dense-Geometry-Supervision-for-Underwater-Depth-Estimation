@@ -93,6 +93,11 @@ class UnetAdaptiveBins(nn.Module):
 
     def forward(self, x, **kwargs):
         unet_out = self.decoder(self.encoder(x), **kwargs)
+        
+        features = EhanceImageGenModule.EIGM(x)
+        unet_out = DepthTextureFusion.DepthTextureFusion
+        unet_out = DepthTextureFusion.DepthTextureFusion(unet_out, features)
+        
         bin_widths_normed, range_attention_maps = self.adaptive_bins_layer(unet_out)
         out = self.conv_out(range_attention_maps)
 
