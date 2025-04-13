@@ -90,13 +90,14 @@ class UnetAdaptiveBins(nn.Module):
         self.decoder = DecoderBN(num_classes=128)
         self.conv_out = nn.Sequential(nn.Conv2d(128, n_bins, kernel_size=1, stride=1, padding=0),
                                       nn.Softmax(dim=1))
+        self.EhanceImageGenModule = EhanceImageGenModule.EIGM()
+        self.DepthTextureFusion = DepthTextureFusion.DepthTextureFusion()
 
     def forward(self, x, **kwargs):
         unet_out = self.decoder(self.encoder(x), **kwargs)
         
         features = EhanceImageGenModule.EIGM(x)
-        unet_out = DepthTextureFusion.DepthTextureFusion
-        unet_out = DepthTextureFusion.DepthTextureFusion(unet_out, features)
+        unet_out = DepthTextureFusion(unet_out, features)
         
         bin_widths_normed, range_attention_maps = self.adaptive_bins_layer(unet_out)
         out = self.conv_out(range_attention_maps)
